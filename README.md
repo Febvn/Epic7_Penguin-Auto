@@ -1,179 +1,208 @@
-# Epic Seven Secret Shop Refresh with GUI
-## Showcase
-![](https://github.com/sya1999/Epic-Seven-Secret-Shop-Refresh/blob/main/assets/E7.gif)
-## Getting Started
-### MOUSE vs ADB
-There are two different ways to run auto shop refresh, either through **controlling host mouse** or **send in debug command** to emulator
+# E7 Penguin Farmer
 
-<br>
+**Automated penguin cultivation and selling tool for Epic Seven (PC client).**
 
-### Special Note (MUST READ!!!)
-1. If you are using the program with the **new PC Client**, then you need to **run the shop refresh program with administrator privileges**
+> **Language / Bahasa:** English (this file) | [Bahasa Indonesia](README_ID.md) | [한국어 / 日本語 / 中文 — in-app UI supported]
 
-(This is not necessary when you are using an emulator.)
+---
 
-<br>
+## What This Does
 
-2. If the **button is grey-out**, that means you typed or selected the wrong window title, the name has to be exact down to the spacing
+This bot automates the repetitive penguin farming loop inside Epic Seven's Sanctuary (Forest of Souls → Growth Altar). It handles purchasing penguins in bulk batches of 50, counting the results by star tier in real time, and optionally selling them from your inventory for gold — all through screen-reading and mouse automation on the PC client window.
 
-<br>
+Three operation modes are available:
 
-3. Make sure the monitor is **TURNED ON AT ALL TIMES**, the program relies on the display to be active to take screenshot
+| Mode | Description |
+|---|---|
+| **Full Loop** | Buy penguins in batches → tally the hatch results → open inventory → auto-sell selected tiers for gold |
+| **Buy Only** | Buy penguins and tally results, skip selling |
+| **Sell Only** | Skip buying, just sell penguins already sitting in your inventory |
 
-(By default, the mouse movement should keep the screen on, just don't power off the display maunally)
+---
 
-<br>
+## Features
 
-4. Make sure that the **program recognize the covenant/mystic bookmark before letting it run unsupervised**
+- **Batch purchasing** — Buys 50 penguins per batch, repeating until your Stigma budget runs out or hits the limit you set.
+- **Real-time yield tracking** — Counts how many 1★, 2★, and 3★ penguins you got per batch and in total, displayed live in the GUI.
+- **Auto-sell with tier filter** — Choose which tiers to sell (1★, 2★, 3★) and how many of each. Defaults to selling 1★ and 2★ while keeping 3★ for EXP.
+- **Stigma budget presets** — Quick-select buttons for common amounts (51,000 / 25,500 / 10,200 / 5,100) or type any custom number. "MAX" mode buys until Stigma is completely gone.
+- **Speed tuning** — Adjust screenshot interval and mouse click delay to match your PC's performance.
+- **6 UI languages** — English, 한국어, 日本語, 繁體中文, 简体中文, Bahasa Indonesia. The GUI switches language instantly.
+- **Hotkeys** — `F5` to start, `ESC` for emergency stop.
+- **Window snapping** — Pins the Epic Seven window to position (0,0) at 906×539 and can snap the bot GUI beside it.
+- **Sound notification** — Plays a tone when farming finishes.
 
-(you can manual refresh faster, so refresh till a bookmark show up, then start the program to see if it purchased)
+---
 
-<br>
+## Requirements
 
-5. Use the **friendship bookmark option** to find out what mouse speed suit your pc. Feel free to increase mouse speed if it's running too fast.
+- **Windows 10 or 11**
+- **Python 3.10+** (a `.venv` virtual environment is included)
+- **Epic Seven PC client** (must be visible and unobstructed on screen)
+- **Administrator privileges** (required for mouse/keyboard input to interact with the game window)
 
-(If you have a good PC, You can set the **mouse speed to 0 and Screenshot speed to 0.3**) 
+### Python Dependencies
 
-### Refresh Options
-**Mouse**
+The core packages used:
 
-Pros:
+| Package | Purpose |
+|---|---|
+| `PyAutoGUI` | Mouse movement and clicking |
+| `PyGetWindow` | Finding and positioning the game window |
+| `keyboard` | Hotkey listeners (F5, ESC) |
+| `opencv-python` | Template matching for button/screen detection |
+| `numpy` | Array operations for image processing |
+| `Pillow` | Screen capture and GUI image display |
 
-- Compatible with all emulator
+Full list in [requirements.txt](requirements.txt).
 
-- Fastest way to refresh shop 
+---
 
-Cons:
+## How to Run
 
-- Can't use mouse while the application is running
+### Quick Start (Recommended)
 
-- Emulator needs to stay on screen
+Double-click either of these batch files:
 
-- Google Play Beta user might need to change desktop display setting to 1920 x 1080
+- **`penguinEpicSeven.bat`**
+- **`run_penguin.bat`**
 
-[Click Here to jump to Mouse section](https://github.com/Solunium/Epic-Seven-E7-Secret-Shop-Refresh/tree/main?tab=readme-ov-file#quick-start-mouse)
+Both do the same thing: launch `E7PenguinFarmer.py` using the bundled `.venv` Python and request Administrator elevation automatically.
 
-<br>
+### Manual Start
 
-**ADB**
-
-Pros:
-
-- Mouse is free to do whatever
-
-- you can minimize the emulator window 
-
-Cons:
-
-- Requires emulator to have ADB 
-
-- need to set ingame resolution to be 1920 x 1080
-
-[Click Here to jump to ADB section](https://github.com/Solunium/Epic-Seven-E7-Secret-Shop-Refresh/tree/main?tab=readme-ov-file#quick-start-android-debug-bridge)
-
-<br>
-
-### Quick Start (Mouse):
-
-<br>
-
-**Step 1.** Download the [latest release](https://github.com/sya1999/Epic-Seven-Secret-Shop-Refresh/releases) make sure to download (**E7 Secret Shop Refresh.zip**)
-
-**Step 2.** Extract the zip file to any directory
-
-**Step 3.** Launch Epic Seven on your emulator, make sure to close dispatch mission and news
-
-**Step 4.** Launch **E7SecretShopRefresh** in the folder that you just extracted
-
-**Step 5.** Select your emulator from the drop down box	
-  - If you can't find it, you need to type in the window name of your emulator and press enter
-  - you can see the name of you emulator by hovering over the taskbar icon of your emulator
-
-**Step 6.** (Optional) you can change the setting, refer to [Setting section](https://github.com/sya1999/Epic-Seven-Secret-Shop-Refresh/tree/main?tab=readme-ov-file#settings)
-
-**Step 6.5:** **EXTRA STEP FOR GOOGLE PLAY BETA USER**
-
-If you are using **GOOGLE PLAY BETA**, make sure **Desktop display resolution setting is 1920 x 1080**, so that it resize properly  
-
-**Step 7.** Press the "start refresh" button
-
-**PRESS ESC KEY TO STOP THE PROGRAM**
-
-**Always make sure that the program recognize the covenant/mystic bookmark before letting it run unsupervised**
-
-**If you encounter a problem, feel free to open a issue on github!**
-	
-You can check your refreshing history in the folder called **ShopRefreshHistory**
-
-<br>
-
-### Quick Start (Android Debug Bridge):
-
-<br>
-
-**Step 1.** Download the [latest release](https://github.com/sya1999/Epic-Seven-Secret-Shop-Refresh/releases) make sure to download (**E7 Secret Shop Refresh.zip**)
-
-**Step 2.** Extract the zip file to any directory
-
-**Step 3.** Launch Epic Seven on your emulator, make sure to close dispatch mission and news
-
-**step 4.** Turn on **ADB** (Android Debug bridge) on your emulator
-
-Google play beta user needs to download **Google Play Games on PC Developer Emulator**, then allow debug when prompted in home screen. 
-Unfortunately, **Epic Seven needs to be redownloaded**. Go with the mouse option, if you don't want to go through the trouble
-
-**step 5.** Change emulator's resolution to **1920 x 1080**
-
-**step 6.** Launch **E7ADBShopRefresh** in the folder that you just extracted
-
-**step 7.** Follow the instruction show in the command line, and press enter to start
-
-**PRESS ESC KEY TO STOP THE PROGRAM**
-
-**Always make sure that the program recognize the covenant/mystic bookmark before letting it run unsupervised**
-
-**One way to test the program is to manual refresh till covenant/mystic bookmark show up, then run the program to see if it brought**
-
-You can check your refreshing history in the folder called **ShopRefreshHistory**
-
-<br>
-
-### Compile it yourself:
-**Step 1.** Install python version 3.11.9
-
-**Step 2.** Git clone this repository to your directory
-
-If you don't want to deal with git, then download the code as zip file using the green "code" button on top
-
-**Step 3.** (Optional) Setup and activate a virtual environment with venv or conda
-
-**Step 4.** Install the dependencies
-```
-pip install -r requirements.txt
-```
-**Step 5.** Open and run E7SecretShopRefresh.py or main.ipynb, go to the main function or app config class to make edit
-
-**Step 6.** (Optional) Use pyinstaller to create an executable
-```
-python -m PyInstaller -F --noconsole -i assets/icon.ico E7SecretShopRefresh.py
-```
-```
-python -m PyInstaller -F -i adb-assets/icon.ico E7ADBShopRefresh.py
+```bash
+cd C:\a\Refreshshop
+.venv\Scripts\python.exe E7PenguinFarmer.py
 ```
 
-<br>
+Run your terminal as Administrator if starting manually.
 
-## Settings
-It can be helpful to select the friendship bookmark to check if the program is detecting items correctly	
+---
 
-Increase mouse speed, if the mouse is moving faster than ui animation
+## Setup (First Time)
 
-Increase screenshot speed, if you have a longer loading time after each purchase/refresh action
+If the `.venv` folder is missing or you're setting up fresh:
 
-You can stay with the default speed setting in most cases
+```bash
+python -m venv .venv
+.venv\Scripts\pip install -r requirements.txt
+```
 
-By not setting a skystone budget, the program will run till ESC is pressed
+Then double-click `penguinEpicSeven.bat` to launch.
 
-You can toggle on and off hint which is a live counter of the items purchased
+---
 
-by turning off auto placement, you can move the emulator to another monitor (After turning this off, make sure the entire emulator window stays on-screen)
+## How It Works
+
+1. **Window detection** — The bot finds the "Epic Seven" window, moves it to (0,0), resizes to 906×539.
+2. **Navigation** — Opens Quick Menu → Sanctuary → Forest of Souls → Growth Altar (using template matching against reference images in `assets_penguin/`).
+3. **Buy loop** — Clicks Buy → Max → Buy All for each batch. Waits for the hatch animation, then reads the result screen to count penguins per tier using digit recognition.
+4. **Sell phase** — Opens Inventory → Materials tab → Arrange menu → selects penguin tiers based on your filter → confirms the sale.
+5. **Reporting** — Updates the GUI counters in real time and logs every step.
+
+### Template Assets
+
+The `assets_penguin/` folder contains reference screenshots the bot uses for template matching:
+
+- Button templates: `buy.png`, `max.png`, `buyall.png`, `result.jpg`, `tap_to_close.jpg`, etc.
+- Navigation: `quick_menu.png`, `sanctuary.png`, `soul.png`, `growaltar.jpg`
+- Sell flow: `sell_bag.jpg`, `sell_penguin_1.jpg`, `sell_btn.jpg`, `sell_confirm.jpg`, etc.
+- Digit templates: `digits/0.png` through `digits/4.png` for OCR-style number reading
+
+---
+
+## Configuration
+
+Settings are saved to `config_penguin.json` and persist between sessions:
+
+```json
+{
+  "language": "en",
+  "stigma": -1,
+  "cost": 102,
+  "mode": "full_auto",
+  "sell_1": true,
+  "sell_2": true,
+  "sell_3": false,
+  "topmost": false,
+  "sound": true,
+  "sell_1_qty": "MAX",
+  "sell_2_qty": "MAX",
+  "sell_3_qty": "MAX",
+  "mouse_speed": 0.08,
+  "screenshot_speed": 0.15
+}
+```
+
+| Field | Meaning |
+|---|---|
+| `stigma` | Budget limit. `-1` means unlimited (buy until empty). |
+| `cost` | Stigma cost per penguin (default 102). |
+| `mode` | `full_auto`, `buy_only`, or `sell_only`. |
+| `sell_1` / `sell_2` / `sell_3` | Whether to sell each penguin tier. |
+| `sell_X_qty` | How many to sell per tier. `"MAX"` sells all. |
+| `mouse_speed` | Delay in seconds between mouse actions. Lower = faster. |
+| `screenshot_speed` | Delay between screen captures. Lower = faster but heavier on CPU. |
+
+---
+
+## Gold Value Reference
+
+| Penguin Tier | Sell Price |
+|---|---|
+| 1★ Small (Green) | 6,000 Gold |
+| 2★ Medium (Blue) | 18,000 Gold |
+| 3★ Large (Epic) | 54,000 Gold |
+
+One batch = 50 penguins × 102 Stigma = 5,100 Stigma per batch.
+
+---
+
+## Troubleshooting
+
+| Problem | Solution |
+|---|---|
+| "Window not found" error | Make sure Epic Seven PC client is open and the window title is exactly "Epic Seven". |
+| Bot clicks wrong spots | The game window must be at position (0,0) with size 906×539. Use the "Snap E7" button in the GUI. |
+| Slow or missing detections | Increase Screenshot Time to 0.2-0.3s. Make sure no other window overlaps the game. |
+| Permission denied | Run the bat file (it requests admin), or start your terminal as Administrator. |
+| `.venv` not found | Run `python -m venv .venv && .venv\Scripts\pip install -r requirements.txt` first. |
+
+---
+
+## Project Structure
+
+```
+Refreshshop/
+├── E7PenguinFarmer.py        # Main bot + GUI (single file)
+├── config_penguin.json        # Saved settings (auto-generated)
+├── requirements.txt           # Python dependencies
+├── penguinEpicSeven.bat       # Launcher (requests admin)
+├── run_penguin.bat            # Alternate launcher
+├── LICENSE                    # MIT License
+├── README.md                  # This file (English)
+├── README_ID.md               # Bahasa Indonesia version
+└── assets_penguin/            # Template images for screen matching
+    ├── digits/                # Digit templates (0-4) for number OCR
+    ├── buy.png, max.png, ...  # Button reference screenshots
+    └── gui_*.png              # GUI penguin tier icons
+```
+
+---
+
+## Disclaimer
+
+This is a third-party automation tool. It is not affiliated with, endorsed by, or connected to Smilegate or Super Creative. Use at your own risk. The authors take no responsibility for any consequences resulting from using this software with the game.
+
+---
+
+## License
+
+This project is released under the [MIT License](LICENSE).
+
+You can freely use, modify, and distribute this software. See the LICENSE file for full terms.
+
+---
+
+**Created by Febvn**

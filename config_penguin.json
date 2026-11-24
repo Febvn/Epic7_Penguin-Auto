@@ -1,0 +1,16 @@
+{
+  "language": "en",
+  "stigma": -1,
+  "cost": 102,
+  "mode": "full_auto",
+  "sell_1": true,
+  "sell_2": true,
+  "sell_3": false,
+  "topmost": false,
+  "sound": true,
+  "sell_1_qty": "MAX",
+  "sell_2_qty": "MAX",
+  "sell_3_qty": "MAX",
+  "mouse_speed": 0.08,
+  "screenshot_speed": 0.15
+}
