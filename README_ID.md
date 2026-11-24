@@ -2,6 +2,10 @@
 
 **Alat otomasi budidaya dan penjualan penguin untuk Epic Seven (klien PC).**
 
+<p align="center">
+  <img src="assets_penguin/gui_preview.png" alt="E7 Penguin Farmer GUI" width="400"/>
+</p>
+
 > **Language / Bahasa:** [English](README.md) | Bahasa Indonesia (file ini) | [한국어 / 日本語 / 中文 — didukung lewat UI aplikasi]
 
 ---
